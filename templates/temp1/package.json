@@ -1,0 +1,77 @@
+{
+  "name": "projectName",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf build && babel src --out-dir build --ignore src/**/__tests__,src/**/__mocks__,src/**/__fixtures__",
+    "docker": "docker build -t gcr.io/ztar-web-platform/zwp-bff .",
+    "dev": "nodemon --watch src --exec babel-node src",
+    "start": "pm2-runtime start ecosystem.config.js",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https:/"
+  },
+  "bugs": {
+    "url": "https://https:"
+  },
+  "homepage": "https://#readme",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/kms": "^1.4.0",
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "express-request-id": "^1.4.1",
+    "express-validator": "^6.2.0",
+    "fs": "0.0.1-security",
+    "helmet": "^3.21.1",
+    "http-status-codes": "^1.3.2",
+    "jaeger-client": "^3.17.0",
+    "jsend": "^1.1.0",
+    "lodash": "^4.17.15",
+    "method-override": "^3.0.0",
+    "mkdirp": "^0.5.1",
+    "newrelic": "^5.13.1",
+    "npm": "^6.12.0",
+    "opentracing": "^0.14.4",
+    "pm2": "^4.1.2",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.1.2",
+    "uuid": "^3.3.3",
+    "winston": "^3.2.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/polyfill": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/register": "^7.4.0",
+    "babel-eslint": "^10.0.2",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "husky": "^2.4.0",
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
+  }
+}
