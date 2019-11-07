@@ -1,51 +1,40 @@
-/* eslint-disable consistent-return */
+/* eslint-disable max-len */
+/* eslint-disable no-underscore-dangle */
 import { Tags, FORMAT_HTTP_HEADERS } from 'opentracing';
 import initTracer from './initTracer';
 
-let span;
-const tracer = initTracer('projectName');
+const tracer = initTracer('project-name');
 
-export const startServerSpan = (req) => {
+const serverSpan = (data) => {
+  const parentSpanContext = tracer.extract(FORMAT_HTTP_HEADERS, data.headers);
+  const hasParentSpan = parentSpanContext._parentIdStr;
+  const span = hasParentSpan ? tracer.startSpan('http_server', { childOf: parentSpanContext, tags: { [Tags.SPAN_KIND]: Tags.SPAN_KIND_RPC_SERVER } }) : tracer.startSpan('http_server');
+  return span;
+};
+const functionSpan = (name, parentSpan) => (parentSpan ? tracer.startSpan(name, { childOf: parentSpan.context() }) : tracer.startSpan(name));
+
+export const getTracer = () => (tracer);
+
+export function startSpan(type, params, parentSpan) {
+  logger.info('startSpan started');
   try {
-    const parentSpanContext = tracer.extract(FORMAT_HTTP_HEADERS, req.headers);
-    span = tracer.startSpan('http_server', {
-      childOf: parentSpanContext,
-      tags: { [Tags.SPAN_KIND]: Tags.SPAN_KIND_RPC_SERVER },
-    });
-    return span;
-  } catch (e) {
-    throw e;
+    if (type === 'HTTP-SERVER') { return serverSpan(params); }
+    return functionSpan(params, parentSpan);
+  } catch (error) {
+    logger.error('StartSpan', error);
+    throw error;
   }
-};
-
-export const startClientSpan = (name, Parentspan) => {
-  try {
-    span = tracer.startSpan(name, { childOf: Parentspan.context() });
-    return { span, tracer };
-  } catch (e) {
-    span.tags('Error', 'extract from request fail, error msg:');
-    throw e;
-  }
-};
-
-export const startSpan = (func, Parentspan) => {
-  try {
-    if (Parentspan != null) {
-      span = tracer.startSpan(func, { childOf: Parentspan.context() });
-    } else {
-      span = tracer.startSpan(func.name);
-    }
-    return span;
-  } catch (error) { throw error; }
-};
-
-export const tracerFinsh = () => {
+}
+export const tracerFinish = () => {
+  logger.info('tracerFinish started');
   try {
     tracer.finish();
-  } catch (error) { throw error; }
+  } catch (error) {
+    logger.error('tracerFinish', error);
+    throw error;
+  }
 };
-
-export const setErrorSpan = (data) => {
+export const setErrorSpan = (span, data) => {
   span.setTag(Tags.ERROR, true);
   span.log({
     level: 'error',
