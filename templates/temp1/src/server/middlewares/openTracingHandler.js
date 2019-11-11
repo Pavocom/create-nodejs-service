@@ -1,8 +1,8 @@
-import { startServerSpan } from '../../utils/openTracing';
+import { startSpan } from '../../utils/openTracing';
 
 export default function (req, res, next) {
   try {
-    const span = startServerSpan(req);
+    const span = startSpan('HTTP-SERVER', req);
     req.root_span = span;
     return next();
   } catch (error) {

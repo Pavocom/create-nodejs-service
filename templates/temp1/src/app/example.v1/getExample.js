@@ -23,8 +23,8 @@ function func2(rootSpan) {
 }
 
 export default async function (req, res) {
+  const span = req.root_span ? startSpan('FUNCTION', 'getExammple', req.root_span) : startSpan('FUNCTION', 'getExammple');
   try {
-    const span = startSpan('getExammple', req.root_span);
     func1(span);
     func2(span);
     await makeRequest('get',
@@ -33,7 +33,7 @@ export default async function (req, res) {
     span.finish();
     return res.status(HttpStatus.OK).jsend.success('success');
   } catch (error) {
-    setErrorSpan(error);
+    setErrorSpan(span, error);
     logger.error('getExample', error);
     return res.status(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR).jsend.error(error);
   }
