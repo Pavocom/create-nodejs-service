@@ -3,7 +3,7 @@
 import { Tags, FORMAT_HTTP_HEADERS } from 'opentracing';
 import initTracer from './initTracer';
 
-const tracer = initTracer('project-name');
+const tracer = initTracer();
 
 const serverSpan = (data) => {
   const parentSpanContext = tracer.extract(FORMAT_HTTP_HEADERS, data.headers);

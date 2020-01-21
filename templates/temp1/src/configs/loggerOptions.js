@@ -1,10 +1,11 @@
 import fs from 'fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
+import { name } from '../../package.json';
 
 const env = process.env.NODE_ENV || 'dev';
 const BASE_LOGS_DIRECTORY = process.env.LOG_FOLDER || './logs';
-const LOGS_DIRECTORY = path.join(BASE_LOGS_DIRECTORY, process.env.NODE_APP || 'projectName');
+const LOGS_DIRECTORY = path.join(BASE_LOGS_DIRECTORY, process.env.NODE_APP || name);
 
 mkdirp.sync(LOGS_DIRECTORY);
 if (!fs.existsSync(LOGS_DIRECTORY)) {

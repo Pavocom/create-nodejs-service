@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import 'newrelic';
 import './server/globals';
-import './utils/kms/decrypt';
+// import './utils/kms/decrypt';
 import config from './configs';
 import createApp from './server';
 
