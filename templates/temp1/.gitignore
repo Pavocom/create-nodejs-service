@@ -117,3 +117,4 @@ app/consumer/consumer.properties
 
 /src/utils/kms/encrypt.js
 /src/utils/kms/env.decrypted
+package-lock.json
