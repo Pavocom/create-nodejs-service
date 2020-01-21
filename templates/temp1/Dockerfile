@@ -1,6 +1,7 @@
-
 # ---- Base Node ----
 FROM node:12-alpine AS base 
+ARG env=dev
+ENV NODE_ENV=${env}
 # install node
 RUN apk add --no-cache tini  
 # set working directory
@@ -24,9 +25,9 @@ RUN npm install
 #
 # ---- Test ----
 # run linters, setup and tests
-FROM dependencies AS test
+FROM dependencies AS build
 COPY . .
-RUN  npm run lint 
+RUN  npm run lint
 RUN  npm run build
 
 #
@@ -34,9 +35,10 @@ RUN  npm run build
 FROM base AS release
 # copy production node_modules
 COPY --from=dependencies /app/prod_node_modules ./node_modules
+COPY --from=build /app/build ./build
 # copy app sources
 COPY . .
 # expose port and define CMD
-EXPOSE 5000
+EXPOSE 8080
 
 CMD npm run start
