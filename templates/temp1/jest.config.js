@@ -3,7 +3,7 @@ module.exports = {
   testEnvironment: 'node',
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/**/*.js',
+    'src/app/*.js',
   ],
   coverageDirectory: './coverage',
   setupFilesAfterEnv: ['./jest.setup.js'],

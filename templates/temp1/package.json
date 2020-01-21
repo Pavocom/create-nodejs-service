@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf build && babel src --out-dir build --ignore src/**/__tests__,src/**/__mocks__,src/**/__fixtures__",
+    "build": "rm -rf build && babel src -d build --copy-files && del build/**/__tests__ build/**/__mocks__ build/**/__fixtures__",
+    "build:windows": "rimraf -rf build && babel src --out-dir build --ignore src/**/__tests__,src/**/__mocks__,src/**/__fixtures__",
     "docker": "docker build -t gcr.io/ztar-web-platform/zwp-bff .",
     "dev": "nodemon --watch src --exec babel-node src",
     "start": "pm2-runtime start ecosystem.config.js",
@@ -15,7 +16,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint && npm run test"
     }
   },
   "repository": {

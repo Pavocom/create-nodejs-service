@@ -1,14 +1,15 @@
 import path from 'path';
 import swaggerJSDoc from 'swagger-jsdoc';
+import { version } from '../../../../package.json';
 
 const swaggerDefinition = {
   info: {
     title: 'REST API for my App', // Title of the documentation
-    version: '1.0.0', // Version of the app
+    version, // Version of the app
     description: 'This is the REST API for my product', // short description of the app
   },
-  host: 'localhost:3000', // the host or url of the app
-  basePath: '/v1', // the basepath of your endpoint
+  host: `${config.host}:${config.port}`, // the host or url of the app
+  basePath: '/', // the basepath of your endpoint
 };
 const options = {
   swaggerDefinition,

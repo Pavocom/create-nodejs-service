@@ -1,4 +1,4 @@
-paths:
+create:
   /pet/{id}:         # path of the user from your endpoint
     put:              # endpoint request type (put request)
       tags:
