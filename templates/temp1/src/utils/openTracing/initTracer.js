@@ -1,8 +1,9 @@
 import { initTracer } from 'jaeger-client';
+import { name } from '../../../package.json';
 
 export default () => {
   const config = {
-    serviceName: 'projectName',
+    serviceName: name,
     sampler: {
       type: 'const',
       param: 1,

@@ -6,10 +6,10 @@
  * description of configuration variables and their potential values.
  */
 
-const appName = 'project-name';
+import { name } from './package.json';
 
 exports.config = {
-  app_name: [`${appName}-${process.env.NODE_ENV}`],
+  app_name: [`${name}-${process.env.NODE_ENV}`],
   license_key: process.env.NEW_RELIC_LICENCE_KEY,
   logging: {
     level: process.env.NEW_RELIC_LOG_LEVEL || 'info',

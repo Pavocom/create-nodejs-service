@@ -2,7 +2,7 @@ import { check } from 'express-validator';
 import Express from 'express';
 import creatExample from './createExample';
 import getExample from './getExample';
-import requestValidator from '../../server/middlewares/requestValidator';
+import { requestValidator, asyncMiddleware } from '../../server/middlewares';
 
 const router = Express.Router();
 const createExampleValidation = [
@@ -17,8 +17,8 @@ const getExampleValidation = [
 
 ];
 
-router.get('/getExample', getExampleValidation, requestValidator, getExample);
-router.post('/createExample', createExampleValidation, requestValidator, creatExample);
+router.get('/getExample', getExampleValidation, requestValidator, asyncMiddleware(getExample));
+router.post('/createExample', createExampleValidation, requestValidator, asyncMiddleware(creatExample));
 
 
 export default router;

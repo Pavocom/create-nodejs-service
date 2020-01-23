@@ -1,7 +1,9 @@
+import { name } from './package.json';
+
 module.exports = {
   apps: [
     {
-      name: 'project-name',
+      name,
       script: 'build/index.js',
       instances: 'max',
       exec_mode: 'cluster',

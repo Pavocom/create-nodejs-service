@@ -2,18 +2,16 @@ import express from 'express';
 import bodyparser from 'body-parser';
 import helmet from 'helmet';
 import requestId from 'express-request-id';
-import jsend from 'jsend';
 import swaggerUi from 'swagger-ui-express';
-import example from '../../app/example.v1';
-import openTracingHandler from '../middlewares/openTracingHandler';
+import { version, name } from '../../../package.json';
+import { openTracingHandler, errorHandler } from '../middlewares';
 import swaggerSpec from '../swagger';
+import example from '../../app/example.v1';
 
-const getResponse = req => ({
-  status: 'OK',
-  environment: process.env.NODE_ENV,
-  version: req.headers['accept-version'],
-});
-
+const healthcheckInfo = {
+  status: `${name} is up!!`,
+  version,
+};
 
 export default function create() {
   const app = express();
@@ -23,15 +21,19 @@ export default function create() {
     logger.debug('app::initExpress', 'express app init middleware');
     app.use(requestId());
     app.use(bodyparser.json());
-    app.use(helmet());
 
-    app.use(jsend.middleware);
+    app.use(helmet());
     app.use(openTracingHandler);
+    app.get('/healthcheck', (req, res) => res.send(healthcheckInfo));
     app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-    app.get('/healthcheck', (req, res) => res.send(getResponse(req)));
+
+    // register new route
     app.use('/v1', example);
+    app.use(errorHandler.generalException);
+    app.use(errorHandler.notRegisteredRoute);
   } catch (error) {
-    logger.error(error);
+    logger.error('app::initExpress', error);
+    process.exit(-1);
   }
   return app;
 }

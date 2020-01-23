@@ -31,10 +31,10 @@ export default async function (req, res) {
       'http://localhost:4000/v1/shipments/healthcheck',
       {}, null, null, span);
     span.finish();
-    return res.status(HttpStatus.OK).jsend.success('success');
+    return res.status(HttpStatus.OK).send();
   } catch (error) {
     setErrorSpan(span, error);
     logger.error('getExample', error);
-    return res.status(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR).jsend.error(error);
+    throw error;
   }
 }
