@@ -1,10 +1,10 @@
-import { createContext } from '../../../__fixtures__/server.mock';
+import { createContext } from '../../../../__fixtures__/server.mock';
 import getExample from '../getExample';
 import createExample from '../createExample';
 
 jest.mock('../getExample');
 jest.mock('../createExample');
-jest.mock('../../../utils/openTracing');
+jest.mock('../../../../utils/openTracing');
 describe('member action test suite', () => {
   const { request } = createContext();
   beforeAll(() => {

@@ -1,4 +1,4 @@
-import tracer from '../../utils/openTracing';
+import tracer from '../../../utils/openTracing';
 
 export default async function (req, res) {
   logger.debug('createExample::controller', 'started');

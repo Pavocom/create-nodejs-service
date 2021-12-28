@@ -1,6 +1,6 @@
 import { check } from 'express-validator';
 import { AsyncRouter } from 'express-async-router';
-import { requestValidator } from '../../server/middlewares';
+import { requestValidator } from '../../../server/middlewares';
 import creatExample from './createExample';
 import getExample from './getExample';
 

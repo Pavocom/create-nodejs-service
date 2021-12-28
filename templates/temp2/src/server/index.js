@@ -5,7 +5,7 @@ import { correlationIdMiddleware } from '@ztarmobile/zmp-logger';
 import { version, name } from '../../package.json';
 import { openTracingHandler, errorHandler } from './middlewares';
 import swaggerSpec from './swagger';
-import example from '../app/example.v1';
+import example from '../app/controllers/example.v1';
 
 const healthcheckInfo = {
   status: `${name} is up!!`,

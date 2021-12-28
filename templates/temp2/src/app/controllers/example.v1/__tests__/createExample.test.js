@@ -1,4 +1,4 @@
-import { RESPONSE, COMMON_HEADER } from '../../../__mockData__';
+import { RESPONSE, COMMON_HEADER } from '../../../../__mockData__';
 import createExample from '../createExample';
 
 describe('creatExample', () => {
