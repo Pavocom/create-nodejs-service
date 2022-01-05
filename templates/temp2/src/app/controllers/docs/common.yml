@@ -1,0 +1,50 @@
+components:
+  schemas:
+    test: 
+      type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: friendly message describing the error reason
+        code:
+          type: number
+          description: code to be used by developers for specific handling in flows
+        status:
+          type: number
+          description: HTTP status
+        type:
+          type: string
+          description: Error type description
+    ValidResponse:
+      type: object
+      properties:
+        orderId:
+          $ref: '#/components/schemas/test'            
+  parameters:
+    brandHeader:
+      name: brand
+      in: header
+      schema:
+        type: string
+        enum: [brand1, brand2,]
+      required: true
+      example: brand1
+    idempotentHeader:
+      in: header
+      name: x-idempotent-key
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: UUID used for caching. Any subsequent requests to the server will fetch the cached response for this specific x-idempotent-key. Search for random UUID.
+      example: 270e3cf7-bca6-46a6-8288-87c392182fc6
+  
+  examples:
+    ValidResBody:
+      value:
+        {
+          "id": "CR2nECmf0Tc11x7l"
+        }
+

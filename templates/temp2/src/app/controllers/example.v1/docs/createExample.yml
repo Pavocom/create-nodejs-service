@@ -1,0 +1,46 @@
+paths:
+  /v1/example:
+    post:
+      description: description of the api 
+      tags:
+        - example/version (1)
+      parameters:
+        - $ref: '#/components/parameters/brandHeader'
+        - $ref: '#/components/parameters/idempotentHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - test
+              properties:
+
+                test:
+                  $ref: '#/components/schemas/test'
+
+            examples:
+              "All parameters (including optional ones)":
+                value:
+                  {
+                    "test": "1243uSER" ,
+                  }
+      responses:
+        "201":
+          description: Valid response.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ValidResponse'
+              examples:
+                "Valid response body":
+                  $ref: '#/components/examples/ValidResBody'
+        "200":
+          description: Cached response if x-idempotent-key is reused.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ValidResponse'
+              examples:
+                "Valid response body":
+                  $ref: '#/components/examples/ValidResBody'

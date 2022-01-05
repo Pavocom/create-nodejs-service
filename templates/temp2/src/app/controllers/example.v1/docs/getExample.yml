@@ -1,0 +1,43 @@
+paths:
+  /v1/{exampleId}:
+    get:
+      description: description of the api
+      tags:
+        - example/version (1)
+      parameters:
+        - $ref: '#/components/parameters/brandHeader'
+        - in: path
+          name: exampleId
+          schema:
+            type: string
+          required: true
+          example: "110221022320200129"
+      responses:
+        "200":
+          description: Auto generated using Swagger
+          content:
+            text/html; charset=utf-8:
+              schema:
+                type: string
+              examples:
+                "valid-response":
+                  value:
+                    {
+                      "test": 1,
+                      "exampleId": "WTXFxeP4vPlI1Ala",
+                    }
+        '403':
+          description: order brand and brand header mismatch
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                '0':
+                  value:
+                    {
+                      "message": "Access denied",
+                      "code": 306,
+                      "status": 403,
+                      "type": "BusinessError",
+                    }
